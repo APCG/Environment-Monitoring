@@ -122,6 +122,7 @@
   highlights: {
   uvIndex: '',
   visibility: '',
+  lighting: '',
   windStatus: {
   windSpeed: '',
   windDirection: '',
@@ -439,18 +440,19 @@
 
   // For Today Highlights
   getSetUVIndex: function() {
-  var uvIndex = this.rawWeatherData.currently.uvIndex;
+  // var uvIndex = this.rawWeatherData.currently.uvIndex;
+  var uvIndex = this.rawDummyData[0].Humidity;
   this.highlights.uvIndex = uvIndex;
   },
   getSetVisibility: function() {
-  var visibilityInMiles = this.rawWeatherData.currently.visibility;
-  this.highlights.visibility = this.mileToKilometer(visibilityInMiles);
+  // var visibilityInMiles = this.rawWeatherData.currently.visibility;
+  var visibilityInMiles = this.rawDummyData[0].Microphone;
+  this.highlights.visibility = visibilityInMiles; // this.mileToKilometer(visibilityInMiles);
   },
   getSetWindStatus: function() {
-  var windSpeedInMiles = this.rawWeatherData.currently.windSpeed;
-  this.highlights.windStatus.windSpeed = this.mileToKilometer(
-  windSpeedInMiles
-  );
+  var light = this.rawDummyData[0].Light;
+  this.highlights.lighting = light;
+  
   var absoluteWindDir = this.rawWeatherData.currently.windBearing;
   this.highlights.windStatus.windDirection = absoluteWindDir;
   this.highlights.windStatus.derivedWindDirection = this.deriveWindDir(
@@ -486,12 +488,11 @@
   // top level organization
   await this.fetchWeatherData();
   await this.fetchDummyData();
-  
-  console.log(this.rawDummyData);
-  
   this.organizeCurrentWeatherInfo();
   this.organizeTodayHighlights();
   this.getSetHourlyTempInfoToday();
+  
+  console.log(this.rawDummyData);
   },
   },
   mounted: async function() {

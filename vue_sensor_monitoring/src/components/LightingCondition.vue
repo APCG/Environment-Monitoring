@@ -82,7 +82,7 @@ export default {
        pointers: {
          pointer: [
            {
-             value: this.highlights.visibility.toString()
+             value: this.highlights.lighting.toString()
            }
          ]
        }
