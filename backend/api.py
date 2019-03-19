@@ -8,7 +8,6 @@ import mysql.connector
 
 db = mysql.connector.connect(host="sydrv.myqnapcloud.com", user="office", passwd="ShipIt2019", database="mysql")
 mycursor = db.cursor()
-mycursor.execute("SELECT * FROM Office_Environment_Dummy")
   
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy   dog'
@@ -25,9 +24,10 @@ def home():
 @app.route('/dummy', methods=['GET'])
 @cross_origin(origin='localhost', headers=['Content- Type', 'Authorization'])
 def dummy():
+	mycursor.execute("SELECT * FROM Office_Environment_Dummy")
 	result = []
-	rows = np.ones((4, 5))
-	for row in rows:
+	# rows = np.ones((4, 5))
+	for row in mycursor:
 		result.append(
 			{"CO2": row[0],
 			 "Temperature": row[1],
@@ -38,4 +38,6 @@ def dummy():
 	result = jsonify(result)
 	return result
 
-app.run()
+
+if __name__ == "__main__":
+	app.run()
