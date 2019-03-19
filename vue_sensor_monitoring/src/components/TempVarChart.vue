@@ -35,7 +35,7 @@
 
 <script>
 export default {
- props: ["tempVar"],
+ props: ["tempVar", "co2Var"],
  components: {},
  data() {
    return {
@@ -80,7 +80,7 @@ export default {
          showHoverEffect: "1",
          theme: "fusion",
          showaxislines: "1",
-         numberSuffix: "°C",
+         numberSuffix: "ppm",
          anchorBgColor: "#6297d9",
          paletteColors: "#6297d9",
          drawCrossLine: "1",
@@ -115,10 +115,10 @@ export default {
    },
    setChartData1: function() {
      var data = [];
-     for (var i = 0; i < this.tempVar.tempToday.length; i++) {
+     for (var i = 0; i < this.co2Var.tempToday.length; i++) {
        var dataObject = {
-         label: this.tempVar.tempToday[i].hour,
-         value: this.tempVar.tempToday[i].temp
+         label: this.co2Var.tempToday[i].hour,
+         value: this.co2Var.tempToday[i].temp
        };
        data.push(dataObject);
      }
@@ -127,12 +127,19 @@ export default {
  },
  mounted: function() {
    this.setChartData();
+   this.setChartData1();
  },
  watch: {
    tempVar: {
      handler: function() {
-       this.setChartData(); 
-       this.setChartData1();                                  
+       this.setChartData();  
+     },
+     deep: true
+   },
+   co2Var: {
+     handler: function() {
+       this.setChartData1();
+		console.log(this.co2Var.tempToday)                                  
      },
      deep: true
    },

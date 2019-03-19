@@ -75,6 +75,7 @@
           id="dashboard-content"
           :highlights="highlights"
           :tempVar="tempVar"
+		  :co2Var="co2Var"
        ></dashboard-content>
       </div>
     </div>
@@ -115,6 +116,11 @@
   possibility: ''
   },
   tempVar: {
+  tempToday: [
+  // gets added dynamically by this.getSetHourlyTempInfoToday()
+  ],
+  },
+  co2Var: {
   tempToday: [
   // gets added dynamically by this.getSetHourlyTempInfoToday()
   ],
@@ -321,6 +327,16 @@
   }
   },
   
+  fetchHistoricData: async function() {
+  var axios = require('axios'); // for handling weather api promise
+  var historicApiResponse = await axios.get("http://127.0.0.1:5000/historic");
+  if (historicApiResponse.status === 200) {
+  this.rawHistoricData = historicApiResponse.data;
+  } else {
+  alert('Hmm... Seems like our weather experts are busy!');
+  }
+  },
+  
   fetchDummyData: async function() {
   var axios = require('axios'); // for handling weather api promise
   var dummyApiResponse = await axios.get("http://127.0.0.1:5000/dummy");
@@ -387,55 +403,23 @@
   ).onlyTime;
   },
   getHourlyInfoToday: function() {
-  return this.rawWeatherData.hourly.data;
+  return this.rawHistoricData.hourly.data;
   },
   getSetHourlyTempInfoToday: function() {
-  var unixTime = this.rawWeatherData.currently.time;
-  var timezone = this.getTimezone();
-  var todayMonthDate = this.unixToHuman(timezone, unixTime).onlyMonthDate;
-  var hourlyData = this.getHourlyInfoToday();
-  for (var i = 0; i < hourlyData.length; i++) {
-       var hourlyTimeAllTypes = this.unixToHuman(timezone, hourlyData[i].time);
-       var hourlyOnlyTime = hourlyTimeAllTypes.onlyTime;
-       var hourlyMonthDate = hourlyTimeAllTypes.onlyMonthDate;
-       if (todayMonthDate === hourlyMonthDate) {
-         var hourlyObject = { hour: '', temp: '' };
-         hourlyObject.hour = hourlyOnlyTime;
-         hourlyObject.temp = this.fahToCel(hourlyData[i].temperature).toString();
-         this.tempVar.tempToday.push(hourlyObject);
-         /*
-         Since we are using array.push(), we are just adding elements
-         at the end of the array. Thus, the array is not getting emptied
-         first when a new location is entered.
-         to solve this problem, a method this.makeTempVarTodayEmpty()
-         has been created, and called from this.locationEntered().
-         */
-       }
+  
+  console.log(this.rawHistoricData[0].length)
+  for (var i = 1; i < this.rawHistoricData[0].length; i++) {
+	
+       var hourlyObject = { hour: '', temp: '' };
+       var hourlyObject_CO2 = { hour: '', co2: '' };
+	   
+       hourlyObject.hour = this.rawHistoricData[i].Time.toString();
+       hourlyObject_CO2.hour = this.rawHistoricData[i].Time.toString();
+       hourlyObject.temp = this.rawHistoricData[i].Temperature.toString();
+       hourlyObject_CO2.co2 = this.rawHistoricData[i].CO2.toString();
+	   this.tempVar.tempToday.push(hourlyObject);
+	   this.co2Var.tempToday.push(hourlyObject_CO2);
      }
-     /*
-     To cover the edge case where the local time is between 10 — 12 PM,
-     and therefore there are only two elements in the array
-     this.tempVar.tempToday. We need to add the points for minimum temperature
-     and maximum temperature so that the chart gets generated with atleast four points.
-     */
-     if (this.tempVar.tempToday.length <= 2) {
-  var minTempObject = {
-  hour: this.currentWeather.todayHighLow.todayTempHighTime,
-  temp: this.currentWeather.todayHighLow.todayTempHigh
-  };
-  var maxTempObject = {
-  hour: this.currentWeather.todayHighLow.todayTempLowTime,
-  temp: this.currentWeather.todayHighLow.todayTempLow
-  };
-  /*
-  Typically, lowest temp are at dawn,
-  highest temp is around mid day.
-  Thus we can safely arrange like min, max, temp after 10 PM.
-  */
-  // array.unshift() adds stuff at the beginning of the array.
-  // the order will be: min, max, 10 PM, 11 PM.
-  this.tempVar.tempToday.unshift(maxTempObject, minTempObject);
-  }
   },
 
   // For Today Highlights
@@ -488,11 +472,14 @@
   // top level organization
   await this.fetchWeatherData();
   await this.fetchDummyData();
+  await this.fetchHistoricData();
   this.organizeCurrentWeatherInfo();
   this.organizeTodayHighlights();
   this.getSetHourlyTempInfoToday();
   
-  console.log(this.rawDummyData);
+  // console.log(this.rawHistoricData);
+  
+  // setInterval(function(){ this.fetchDummyData(); }, 60000);
   },
   },
   mounted: async function() {

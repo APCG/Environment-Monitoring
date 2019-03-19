@@ -6,9 +6,6 @@ from flask_cors import CORS, cross_origin
 from flask import request, jsonify
 import mysql.connector
 
-db = mysql.connector.connect(host="sydrv.myqnapcloud.com", user="office", passwd="ShipIt2019", database="mysql")
-mycursor = db.cursor()
-  
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy   dog'
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -24,18 +21,44 @@ def home():
 @app.route('/dummy', methods=['GET'])
 @cross_origin(origin='localhost', headers=['Content- Type', 'Authorization'])
 def dummy():
-	mycursor.execute("SELECT * FROM Office_Environment_Dummy")
+	db = mysql.connector.connect(host="sydrv.myqnapcloud.com", user="office", passwd="ShipIt2019", database="mysql")
+	mycursor = db.cursor()
+
+	mycursor.execute("SELECT * FROM Office_Environment")
 	result = []
 	# rows = np.ones((4, 5))
-	for row in mycursor:
+	for row in mycursor.fetchall():
 		result.append(
-			{"CO2": row[0],
-			 "Temperature": row[1],
-			 "Microphone": row[2],
-			 "Humidity": row[3],
-			 "Light": row[4]})
+			{"CO2": float(row[3]),
+			 "Temperature": float(row[1]),
+			 "Microphone": float(row[4]),
+			 "Humidity": float(row[2]),
+			 "Light": float(row[5])})
 
 	result = jsonify(result)
+	mycursor.close()
+	return result
+
+@app.route('/historic', methods=['GET'])
+@cross_origin(origin='localhost', headers=['Content- Type', 'Authorization'])
+def historic():
+	db = mysql.connector.connect(host="sydrv.myqnapcloud.com", user="office", passwd="ShipIt2019", database="mysql")
+	mycursor = db.cursor()
+
+	mycursor.execute("SELECT * FROM Office_Environment_Historic ORDER BY Pimary_ID DESC")
+
+	# rows = np.ones((4, 5))
+	result = []
+	idx = 0
+	for idx, row in enumerate(mycursor.fetchall()):
+		result.append(
+			{"CO2": float(row[5]),
+			 "Temperature": float(row[3]),
+			 "Time": str(row[2].time())[:5]})
+
+	result.insert(0, {"length": idx + 1})
+	result = jsonify(result)
+	mycursor.close()
 	return result
 
 
