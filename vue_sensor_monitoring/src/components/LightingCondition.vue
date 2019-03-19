@@ -73,7 +73,7 @@ export default {
            },
            {
              minValue: "30",
-             maxValue: "40",
+             maxValue: "4500",
              label: "Too much",
              code: "#E89B9B"
            }
@@ -92,7 +92,7 @@ export default {
  watch: {
    highlights: {
      handler: function() {
-       this.datasource.pointers.pointer[0].value = this.highlights.visibility.toString();
+       this.datasource.pointers.pointer[0].value = this.highlights.lighting.toString();
      },
      deep: true
    }
