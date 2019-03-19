@@ -83,7 +83,7 @@
 
 <script>
   import Content from './components/Content.vue';
-
+  
   export default {
   name: 'app',
   props: [],
@@ -98,6 +98,7 @@
   long: '', // raw longitude from google maps api response
   completeWeatherApi: '', // weather api string with lat and long
   rawWeatherData: '', // raw response from weather api
+  rawDummyData: '', // raw response from weather api
   currentWeather: {
   full_location: '', // for full address
   formatted_lat: '', // for N/S
@@ -318,6 +319,16 @@
   alert('Hmm... Seems like our weather experts are busy!');
   }
   },
+  
+  fetchDummyData: async function() {
+  var axios = require('axios'); // for handling weather api promise
+  var dummyApiResponse = await axios.get("http://127.0.0.1:5000/dummy");
+  if (dummyApiResponse.status === 200) {
+  this.rawDummyData = dummyApiResponse.data;
+  } else {
+  alert('Hmm... Seems like our Dummy experts are busy!');
+  }
+  },
 
   // Get and set functions; often combined, because they are short
 
@@ -474,6 +485,10 @@
   organizeAllDetails: async function() {
   // top level organization
   await this.fetchWeatherData();
+  await this.fetchDummyData();
+  
+  console.log(this.rawDummyData);
+  
   this.organizeCurrentWeatherInfo();
   this.organizeTodayHighlights();
   this.getSetHourlyTempInfoToday();
