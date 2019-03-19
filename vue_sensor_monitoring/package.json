@@ -17,6 +17,7 @@
     "fusioncharts": "^3.13.3",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
+    "mysql-json": "^0.1.3",
     "vue": "^2.5.11",
     "vue-fusioncharts": "^2.0.4"
   },
