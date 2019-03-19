@@ -66,13 +66,8 @@ export default {
              code: "#7DA9E0"//"#91E572"
            },
            {
-<<<<<<< HEAD
              minValue: "750",
              maxValue: "1000",
-=======
-             minValue: "30",
-             maxValue: "4500",
->>>>>>> 3839f3f3ee67f716b957d31e3ecfffd34c36f517
              label: "Too much",
              code: "#6297d9"//"#E89B9B"
            }

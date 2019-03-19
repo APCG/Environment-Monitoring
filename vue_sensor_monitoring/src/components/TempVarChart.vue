@@ -118,7 +118,7 @@ export default {
      for (var i = 0; i < this.co2Var.tempToday.length; i++) {
        var dataObject = {
          label: this.co2Var.tempToday[i].hour,
-         value: this.co2Var.tempToday[i].temp
+         value: this.co2Var.tempToday[i].co2
        };
        data.push(dataObject);
      }
@@ -139,7 +139,7 @@ export default {
    co2Var: {
      handler: function() {
        this.setChartData1();
-		console.log(this.co2Var.tempToday)                                  
+		console.log(this.CO2ChartData)                                  
      },
      deep: true
    },
