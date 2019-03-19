@@ -15,6 +15,9 @@
                 <img src="./assets/Search.svg" width="24" height="24">
            </button>
             </div>
+          <div id="logo">
+            <img src="./assets/IFX_LOGO_W.svg" width="300" height="100">
+          </div>
           <div id="info">
             <div class="wrapper-left">
               <div id="current-weather">
@@ -231,7 +234,7 @@
   locationEntered: function() {
   var input = this.$refs.input;
   if (input.value === '') {
-  this.location = "New York";
+  this.location = "Neuniberg";
   } else {
   this.location = this.convertToTitleCase(input.value);
   }

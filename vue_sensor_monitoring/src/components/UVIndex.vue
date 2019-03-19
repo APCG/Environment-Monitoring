@@ -26,14 +26,14 @@ export default {
      dataformat: "json",
      datasource: {
        chart: {
-         caption: "UV Index",
+         caption: "Humidity",
          captionFontBold: "0",
          captionFontColor: "#000000",
          captionPadding: "30",
          lowerLimit: "0",
-         upperLimit: "15",
-         lowerLimitDisplay: "1",
-         upperLimitDisplay: "1",
+         upperLimit: "100",
+         lowerLimitDisplay: "0",
+         upperLimitDisplay: "100",
          showValue: "0",
          theme: "fusion",
          baseFont: "Roboto",

@@ -259,6 +259,12 @@ hr {
     height: 100vh;
   }
 
+  #logo > img {
+    top: -30px;
+    position: relative;
+    margin-right: 10px;
+  }  
+
   #info {
     position: fixed;
     bottom: 50px;

@@ -30,7 +30,7 @@ export default {
      creditLabel: false,
      datasource: {
        chart: {
-         caption: "Air Visibility",
+         caption: "Noise Level",
          captionFontBold: "0",
          captionFontColor: "#000000",
          baseFont: "Roboto",

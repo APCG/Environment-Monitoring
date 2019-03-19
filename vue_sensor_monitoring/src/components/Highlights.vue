@@ -5,7 +5,7 @@
       <div class="row">
         <uv-index :highlights="highlights"></uv-index>
         <visibility :highlights="highlights"></visibility>
-        <wind-status :highlights="highlights"></wind-status>
+        <light-status :highlights="highlights"></light-status>
       </div>
     </div>
   </div>
@@ -14,14 +14,14 @@
 <script>
 import UVIndex from "./UVIndex.vue";
 import Visibility from "./Visibility.vue";
-import WindStatus from "./WindStatus.vue";
+import LightingCondition from "./LightingCondition.vue";
 
 export default {
   props: ["highlights"],
   components: {
     "uv-index": UVIndex,
     "visibility": Visibility,
-    "wind-status": WindStatus,
+    "light-status": LightingCondition,
   },
 };
 </script>
