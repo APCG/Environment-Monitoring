@@ -30,20 +30,20 @@ export default {
      creditLabel: false,
      datasource: {
        chart: {
-         caption: "Lighting Condition",
+         caption: "Lighting [Lux]",
          captionFontBold: "0",
          captionFontColor: "#000000",
          baseFont: "Roboto",
-         numberSuffix: " Lux",
+         numberSuffix: "",
          lowerLimit: "0",
-         upperLimit: "40",
+         upperLimit: "1000",
          showPointerShadow: "1",
          animation: "1",
          transposeAnimation: "1",
          theme: "fusion",
          bgAlpha: "0",
          canvasBgAlpha: "0",
-         valueFontSize: "20",
+         valueFontSize: "15",
          valueFontColor: "#000000",
          valueFontBold: "1",
          pointerBorderAlpha: "0",
@@ -55,34 +55,29 @@ export default {
          color: [
            {
              minValue: "0",
-             maxValue: "10",
+             maxValue: "500",
              label: "Less",
-             code: "#EEF278"
+             code: "#D8EDFF"//"#EEF278"
            },
            {
-             minValue: "10",
-             maxValue: "20",
-             label: "Moderate",
-             code: "#C8F59B"
-           },
-           {
-             minValue: "20",
-             maxValue: "30",
+             minValue: "500",
+             maxValue: "750",
              label: "Good",
-             code: "#91E572"
+             code: "#7DA9E0"//"#91E572"
            },
            {
-             minValue: "30",
-             maxValue: "40",
+             minValue: "750",
+             maxValue: "1000",
              label: "Too much",
-             code: "#E89B9B"
+             code: "#6297d9"//"#E89B9B"
            }
          ]
        },
        pointers: {
          pointer: [
            {
-             value: this.highlights.lighting.toString()
+//             numberSuffix: " Lux",
+             value: this.highlights.visibility.toString()
            }
          ]
        }

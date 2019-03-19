@@ -34,9 +34,9 @@ export default {
          captionFontBold: "0",
          captionFontColor: "#000000",
          baseFont: "Roboto",
-         numberSuffix: " km",
+         numberSuffix: " dB",
          lowerLimit: "0",
-         upperLimit: "40",
+         upperLimit: "140",
          showPointerShadow: "1",
          animation: "1",
          transposeAnimation: "1",
@@ -55,21 +55,22 @@ export default {
          color: [
            {
              minValue: "0",
-             maxValue: "4",
-             label: "Fog",
-             code: "#6297d9"
+             maxValue: "60",
+             label: "Normal",
+             code: "#83B6A7"
+           },
+
+           {
+             minValue: "60",
+             maxValue: "85",
+             label: "Noisy",
+             code: "#F4B38B"
            },
            {
-             minValue: "4",
-             maxValue: "10",
-             label: "Haze",
-             code: "#7DA9E0"
-           },
-           {
-             minValue: "10",
-             maxValue: "40",
-             label: "Clear",
-             code: "#D8EDFF"
+             minValue: "85",
+             maxValue: "140",
+             label: "Harmful",
+             code: "#E89B9B"
            }
          ]
        },

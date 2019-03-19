@@ -26,7 +26,7 @@ export default {
      dataformat: "json",
      datasource: {
        chart: {
-         caption: "Humidity",
+         caption: "Relative Humidity",
          captionFontBold: "0",
          captionFontColor: "#000000",
          captionPadding: "30",
@@ -34,6 +34,7 @@ export default {
          upperLimit: "100",
          lowerLimitDisplay: "0",
          upperLimitDisplay: "100",
+         numberSuffix: "%",
          showValue: "0",
          theme: "fusion",
          baseFont: "Roboto",

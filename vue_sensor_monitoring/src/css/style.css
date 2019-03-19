@@ -16,7 +16,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(-180deg, #80b6db 0%, #7da7e2 100%);
+  background-image: linear-gradient(-180deg,	#83B6A7 0%, #89B6A7 100%);
 }
 
 #search {
